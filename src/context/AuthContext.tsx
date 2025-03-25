@@ -2,6 +2,7 @@
 import { createContext, useEffect, useState, ReactNode, JSX } from 'react';
 import { getMyUserInfo } from '../services/user';
 import { sessionInfo } from '../services/authservice';
+import { Address } from '../models/Address';
 
 interface Role {
   roleId: number;
@@ -14,7 +15,6 @@ interface Account {
 interface User {
   idUser?: number;
   account?: Account;
-  // Agrega más campos según tu backend si es necesario
 }
 
 interface AuthContextType {
@@ -26,6 +26,7 @@ interface AuthContextType {
   login: () => Promise<void>;
   logout: () => void;
   user: User | null;
+  address: Address | null;
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [accountId, setAccountId] = useState<number | null>(null);
   const [role, setRole] = useState<number | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [address, setAddress] = useState<Address | null>(null);
 
   const checkUserProfile = async () => {
     try {
@@ -144,7 +146,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         accountId,
         login,
         logout,
-        user
+        user,
+        address
       }}
     >
       {children}
