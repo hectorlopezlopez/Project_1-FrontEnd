@@ -2,6 +2,7 @@
 import { useContext, useState, FormEvent, JSX } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { loginRequest } from '../services/authservice';
 
 function Login(): JSX.Element {
   const { login } = useContext(AuthContext);
@@ -14,12 +15,14 @@ function Login(): JSX.Element {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/auth/accounts/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ username, password })
-      });
+      // const response = await fetch('http://localhost:8080/auth/accounts/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   credentials: 'include',
+      //   body: JSON.stringify({ username, password })
+      // });
+
+      const response = await loginRequest(username, password);
 
       const data = await response.json();
 

@@ -3,6 +3,7 @@ import { useState, useContext, useEffect, ChangeEvent, FormEvent, JSX } from 're
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { createUserProfile } from '../services/user';
 
 function CompleteProfile(): JSX.Element {
   const { login, accountId, hasUserProfile } = useContext(AuthContext);
@@ -19,19 +20,26 @@ function CompleteProfile(): JSX.Element {
   const handleCreateUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8080/users", {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      credentials: 'include',
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        createdAt,
-        phone,
-        account: { accountId }
-      })
-    });
+    // const response = await fetch("http://localhost:8080/users", {
+    //   method: 'POST',
+    //   headers: { "Content-Type": "application/json" },
+    //   credentials: 'include',
+    //   body: JSON.stringify({
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     createdAt,
+    //     phone,
+    //     account: { accountId }
+    //   })
+    // });
+
+    const response = await createUserProfile( {firstName,
+      lastName,
+      email,
+      createdAt,
+      phone,
+      account: { accountId }});
 
     if (response.ok) {
       await login(); 

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState, ChangeEvent, FormEvent, JSX } from 're
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { loginRequest, registerRequest } from '../services/authservice';
 
 interface Role {
   roleId: number;
@@ -40,11 +41,13 @@ function Register(): JSX.Element {
     setSuccess('');
 
     try {
-      const response = await fetch("http://localhost:8080/auth/accounts/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
+      // const response = await fetch("http://localhost:8080/auth/accounts/register", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(formData)
+      // });
+
+      const response = await registerRequest(formData);
 
       let data;
       try {
@@ -59,15 +62,17 @@ function Register(): JSX.Element {
       if (data["account: "]) {
         setSuccess("Account created successfully.");
 
-        const loginRes = await fetch("http://localhost:8080/auth/accounts/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            username: formData.username,
-            password: formData.password
-          })
-        });
+        // const loginRes = await fetch("http://localhost:8080/auth/accounts/login", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   credentials: "include",
+        //   body: JSON.stringify({
+        //     username: formData.username,
+        //     password: formData.password
+        //   })
+        // });
+
+        const loginRes = await loginRequest(formData.username, formData.password);
 
         if (loginRes.ok) {
           await login(); 
