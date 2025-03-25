@@ -3,16 +3,18 @@ import { JSX, useContext } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { logoutRequest } from '../services/authservice';
 
 function Home(): JSX.Element {
   const { user, role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async (): Promise<void> => {
-    await fetch("http://localhost:8080/auth/accounts/logout", {
-      method: "GET",
-      credentials: "include",
-    });
+    // await fetch("http://localhost:8080/auth/accounts/logout", {
+    //   method: "GET",
+    //   credentials: "include",
+    // });
+    logoutRequest();
     logout();
     navigate("/login");
   };

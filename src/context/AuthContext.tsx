@@ -1,5 +1,7 @@
 // src/context/AuthContext.tsx
 import { createContext, useEffect, useState, ReactNode, JSX } from 'react';
+import { getMyUserInfo } from '../services/user';
+import { sessionInfo } from '../services/authservice';
 
 interface Role {
   roleId: number;
@@ -41,10 +43,12 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
   const checkUserProfile = async () => {
     try {
-      const userRes = await fetch("http://localhost:8080/users/myInfo", {
-        method: 'GET',
-        credentials: 'include'
-      });
+      // const userRes = await fetch("http://localhost:8080/users/myInfo", {
+      //   method: 'GET',
+      //   credentials: 'include'
+      // });
+
+      const userRes = await getMyUserInfo();
 
       if (!userRes.ok) {
         setUser(null);
@@ -77,10 +81,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8080/auth/accounts/sessionInfo', {
-      method: 'GET',
-      credentials: 'include'
-    })
+    // fetch('http://localhost:8080/auth/accounts/sessionInfo', {
+    //   method: 'GET',
+    //   credentials: 'include'
+    // })
+      sessionInfo()
       .then(async (res) => {
         if (res.ok) {
           const data = await res.json();
@@ -102,10 +107,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   }, []);
 
   const login = async () => {
-    const res = await fetch("http://localhost:8080/auth/accounts/sessionInfo", {
-      method: 'GET',
-      credentials: 'include'
-    });
+    // const res = await fetch("http://localhost:8080/auth/accounts/sessionInfo", {
+    //   method: 'GET',
+    //   credentials: 'include'
+    // });
+    const res = await sessionInfo();
 
     if (res.ok) {
       const data = await res.json();
