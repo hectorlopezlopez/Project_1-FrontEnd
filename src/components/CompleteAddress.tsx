@@ -2,14 +2,12 @@ import { useState, useContext, useEffect, ChangeEvent, FormEvent, JSX } from 're
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
-import { createAddress, getAllAddress } from '../services/addressService';
-import { Address } from '../models/Address';
+import { createAddress} from '../services/addressService';
 
 function CompleteAddress(){
     const { hasAddress } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [address, setAddress] = useState<Address[]>([]);
     const [country, setCountry] = useState<string>('');
     const [state, setState] = useState<string>('');
     const [city, setCity] = useState<string>('');
@@ -17,22 +15,6 @@ function CompleteAddress(){
     const [streetNum, setStreetNum] = useState<string>('');
     const [zip, setZip] = useState<string>('');
     const [addressCreated, setAddressCreated] = useState<boolean>(false);
-
-    const auth = useContext(AuthContext);
-
-    const fetchAddress = async () => {
-        try {
-            const res = await getAllAddress();
-            const data = await res.json();
-            if(Array.isArray(data)){
-                setAddress(data);
-            } else {
-                setAddress([data.address]);
-            }
-        } catch(err){
-            console.error(err);
-        }
-    };
 
     const handleCreateAddress = async () => {
         const address = {
