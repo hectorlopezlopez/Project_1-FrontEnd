@@ -3,7 +3,7 @@ import { useContext, useState, FormEvent, JSX } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { loginRequest } from '../services/authservice';
-
+import Swal from 'sweetalert2';
 function Login(): JSX.Element {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -28,6 +28,16 @@ function Login(): JSX.Element {
 
       if (data["account: "]) {
         setTimeout(async () => {
+          Swal.fire({
+            toast:true,
+            position: 'top-end',
+            title: 'Logged!',
+            icon: 'success',
+            showConfirmButton: false,
+            confirmButtonText: 'Accept',
+            timer: 1000,
+                 timerProgressBar: true,
+          });
           await login(); 
           navigate("/home");
         }, 200); 

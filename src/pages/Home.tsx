@@ -49,6 +49,9 @@ function Home(): JSX.Element {
       )}
 
       <button onClick={handleLogout}>Log out</button>
+      <button type="button" onClick={() => navigate("/myprofile")}>
+        Updatemyprof
+      </button>
       <button type="button" onClick={() => navigate("/loan")}>
         Loan
       </button>

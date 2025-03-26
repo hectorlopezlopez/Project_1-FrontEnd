@@ -1,3 +1,4 @@
+import { User } from "../models/User";
 
 const API_BASE = 'http://localhost:8080';
 
@@ -21,5 +22,16 @@ export const getMyUserInfo = async () => {
   return await fetch(`${API_BASE}/users/myInfo`, {
     method: 'GET',
     credentials: 'include',
+  });
+};
+
+export const updateUser = async (userData: User): Promise<Response> => {
+  return await fetch("http://localhost:8080/users/myuser", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(userData),
   });
 };

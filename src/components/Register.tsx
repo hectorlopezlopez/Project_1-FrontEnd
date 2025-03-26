@@ -4,6 +4,7 @@ import { useContext, useEffect, useState, ChangeEvent, FormEvent, JSX } from 're
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { loginRequest, registerRequest } from '../services/authservice';
+import Swal from 'sweetalert2';
 
 interface Role {
   roleId: number;
@@ -60,6 +61,16 @@ function Register(): JSX.Element {
       }
 
       if (data["account: "]) {
+        Swal.fire({
+          toast:true,
+          title: 'Success!',
+          text: 'Your account has been created successfully.',
+          icon: 'success',
+          showConfirmButton: false,
+          confirmButtonText: 'Accept',
+          timer: 1000,
+               timerProgressBar: true,
+        });
         setSuccess("Account created successfully.");
 
         // const loginRes = await fetch("http://localhost:8080/auth/accounts/login", {
@@ -81,6 +92,16 @@ function Register(): JSX.Element {
           setError("Login authentication failed.");
         }
       } else {
+        Swal.fire({
+          toast:true,
+          title: 'ERROR!',
+          text: 'This account already exists.',
+          icon: 'error',
+          showConfirmButton: false,
+          confirmButtonText: 'Accept',
+          timer: 1000,
+               timerProgressBar: true,
+        });
         setError(data["error: "] || "No se pudo crear la cuenta");
       }
     } catch (err) {
