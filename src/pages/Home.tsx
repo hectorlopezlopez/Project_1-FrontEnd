@@ -1,5 +1,5 @@
 // src/pages/Home.tsx
-import { JSX, useContext } from 'react';
+import { JSX, useContext, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
@@ -23,9 +23,9 @@ function Home(): JSX.Element {
   //   navigate("/users")
   // }
 
-  // const handleAddress = async (): Promise<void> => {
-  //   navigate("/create-address");
-  // }
+  const handleAddress = async (): Promise<void> => {
+    navigate("/create-address");
+  }
 
   console.log("USER desde Home:", user);
   console.log("ROLE desde Home:", role?.roleId);
@@ -42,9 +42,9 @@ function Home(): JSX.Element {
       {role.roleId === 2 && (
         <div>
           <p>Esta sección solo la ven los MANAGERS</p>
-          <button type="button" onClick={() => navigate("/users")}>
-            All Users
-          </button>
+          <button type="button" onClick={() => navigate("/users")}>All Users</button>
+          <button type="button" onClick={() => navigate("/loans")}>All Loans</button>
+
         </div>
       )}
 
