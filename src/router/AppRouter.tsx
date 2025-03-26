@@ -13,6 +13,8 @@ import Login from '../components/Login';
 import CreateLoan from '../components/CreateLoan';
 import ManagerUsers from '../components/ManagerUsers';
 import UpdateMyProfile from '../components/UpdateMyProfile';
+import GetLoans from '../components/GetLoans';
+
 
 export const AppRouter = (): JSX.Element => {
   const { authStatus, hasUserProfile } = useContext(AuthContext);
@@ -34,7 +36,8 @@ export const AppRouter = (): JSX.Element => {
             <Route path="/create-address" element={<CompleteAddress />} /> 
             
             <Route path="/*" element={<Navigate to="/home" />} />
-            <Route path="/users" element={<ManagerUsers />} />          
+            <Route path="/users" element={<ManagerUsers />} /> 
+            <Route path='/loans' element={<GetLoans/>} />         
             </>
         ) : (
           <>

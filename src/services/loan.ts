@@ -1,14 +1,29 @@
 const API_BASE_URL = 'http://localhost:8080';
 
-export const createLoan = async (loan: any) =>
+export const createLoan = async (loan: any) =>{
   fetch(`${API_BASE_URL}/loan`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(loan)
   });
+}
 
-  export const getLoans = async () =>
-    fetch(`${API_BASE_URL}/loan`, {
-      credentials: 'include'
+
+export const getAllLoans = async () => {
+  return await fetch(`${API_BASE_URL}/loan`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+     'Content-Type': 'application/json'
+      }
+      }).then(async (response) => {
+        const data = await response.json();
+        if (typeof data === "string" && data.startsWith("error")) {
+            throw new Error(data);
+        }
+        return data;
+    }).catch(error => {
+        console.error("Error fetching users:", error);
+        return null;
     });
-  
+}
