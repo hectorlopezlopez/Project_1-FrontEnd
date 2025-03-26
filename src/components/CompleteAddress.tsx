@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect, ChangeEvent, FormEvent, JSX } from 'react';
+import { useState, useContext, useEffect, ChangeEvent, JSX } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { createAddress} from '../services/addressService';
 
-function CompleteAddress(){
+function CompleteAddress(): JSX.Element{
     const { hasAddress } = useContext(AuthContext);
     const navigate = useNavigate();
 
