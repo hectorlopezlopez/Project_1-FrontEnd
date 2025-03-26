@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router";
 
 function CreateLoan() {
     const [amountRequested, setAmountRequested] = useState('');
@@ -64,7 +64,7 @@ function CreateLoan() {
 
                 <input
                     type="text"
-                    placeholder="Last Update (YYYY-MM-DD)"
+                    placeholder="Created: (YYYY-MM-DD)"
                     value={lastUpdate}
                     onChange={(e) => setLastUpdate(e.target.value)}
                 /><br/>

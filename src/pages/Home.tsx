@@ -51,11 +51,14 @@ function Home(): JSX.Element {
       {role.roleId === 1 && (
         <div>
           <p>Esta sección solo la ven los USUARIOS NORMALES</p>
-          {/* <button onClick={handleAddress}>Address</button> */}
+          <button onClick={handleAddress}>Address</button>
         </div>
       )}
 
       <button onClick={handleLogout}>Log out</button>
+      <button type="button" onClick={() => navigate("/myprofile")}>
+        Updatemyprof
+      </button>
       <button type="button" onClick={() => navigate("/loan")}>Loan</button>
     </div>
   );

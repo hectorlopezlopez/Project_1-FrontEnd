@@ -18,7 +18,6 @@ interface User {
   account?: Account;
   firstName?: string;
   address?: Address;
-  // Agrega más campos según tu backend si es necesario
 }
 
 interface AuthContextType {

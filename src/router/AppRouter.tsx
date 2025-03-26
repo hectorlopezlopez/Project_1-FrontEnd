@@ -12,6 +12,7 @@ import Home from '../pages/Home';
 import Login from '../components/Login';
 import CreateLoan from '../components/CreateLoan';
 import ManagerUsers from '../components/ManagerUsers';
+import UpdateMyProfile from '../components/UpdateMyProfile';
 
 export const AppRouter = (): JSX.Element => {
   const { authStatus, hasUserProfile } = useContext(AuthContext);
@@ -28,6 +29,7 @@ export const AppRouter = (): JSX.Element => {
         hasUserProfile ? (
           <>
             <Route path="/home" element={<Home />} />
+            <Route path="/myprofile" element={<UpdateMyProfile />} />
             <Route path='/loan' element={<CreateLoan/>} />
             <Route path="/create-address" element={<CompleteAddress />} /> 
             
