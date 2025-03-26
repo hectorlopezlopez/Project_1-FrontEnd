@@ -44,7 +44,7 @@ function Home(): JSX.Element {
       {role.roleId === 1 && (
         <div>
           <p>Esta sección solo la ven los USUARIOS NORMALES</p>
-          {/* <button onClick={handleAddress}>Address</button> */}
+          <button onClick={handleAddress}>Address</button>
         </div>
       )}
 
