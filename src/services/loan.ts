@@ -1,3 +1,5 @@
+import { Loan } from "../models/Loan";
+
 const API_BASE_URL = 'http://localhost:8080';
 
 export const createLoan = async (loan: any) =>
@@ -7,8 +9,17 @@ export const createLoan = async (loan: any) =>
     body: JSON.stringify(loan)
   });
 
-  export const getLoans = async () =>
+export const getLoans = async () =>
     fetch(`${API_BASE_URL}/loan`, {
       credentials: 'include'
     });
+
+export const getLoansUser = async() =>{
+    return await fetch("${API_BASE_URL}/loan/user",{
+        method: "GET",
+        credentials: 'include',
+    });
+};
+
+
   
