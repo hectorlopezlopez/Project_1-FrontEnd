@@ -4,6 +4,7 @@ import { useState, useContext, useEffect, ChangeEvent, FormEvent, JSX } from 're
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { createUserProfile } from '../services/user';
+import Swal from 'sweetalert2';
 
 function CompleteProfile(): JSX.Element {
   const { login, accountId, hasUserProfile } = useContext(AuthContext);
@@ -42,6 +43,16 @@ function CompleteProfile(): JSX.Element {
       account: { accountId }});
 
     if (response.ok) {
+      Swal.fire({
+               toast:true,
+               title: 'Success!',
+               text: 'Your profile has been created successfully.',
+               icon: 'success',
+               showConfirmButton: false,
+               confirmButtonText: 'Accept',  
+               timer: 1000,
+               timerProgressBar: true,
+             });
       await login(); 
       setProfileCreated(true); 
     } else {
