@@ -19,9 +19,13 @@ function Home(): JSX.Element {
     navigate("/login");
   };
 
-  const handleAddress = async (): Promise<void> => {
-    navigate("/create-address");
-  }
+  // const handleAllUsers = async (): Promise<void> => {
+  //   navigate("/users")
+  // }
+
+  // const handleAddress = async (): Promise<void> => {
+  //   navigate("/create-address");
+  // }
 
   console.log("USER desde Home:", user);
   console.log("ROLE desde Home:", role?.roleId);
@@ -38,6 +42,9 @@ function Home(): JSX.Element {
       {role.roleId === 2 && (
         <div>
           <p>Esta sección solo la ven los MANAGERS</p>
+          <button type="button" onClick={() => navigate("/users")}>
+            All Users
+          </button>
         </div>
       )}
 
@@ -52,9 +59,7 @@ function Home(): JSX.Element {
       <button type="button" onClick={() => navigate("/myprofile")}>
         Updatemyprof
       </button>
-      <button type="button" onClick={() => navigate("/loan")}>
-        Loan
-      </button>
+      <button type="button" onClick={() => navigate("/loan")}>Loan</button>
     </div>
   );
 }
