@@ -2,9 +2,11 @@
 import { createContext, useEffect, useState, ReactNode, JSX } from 'react';
 import { getMyUserInfo } from '../services/user';
 import { sessionInfo } from '../services/authservice';
+import { Address } from '../models/Address';
 
 interface Role {
   roleId: number;
+  roleName: string;
 }
 
 interface Account {
@@ -14,6 +16,8 @@ interface Account {
 interface User {
   idUser?: number;
   account?: Account;
+  firstName?: string;
+  address?: Address;
   // Agrega más campos según tu backend si es necesario
 }
 
@@ -21,11 +25,13 @@ interface AuthContextType {
   authStatus: 'checking' | 'authenticated' | 'not-authenticated';
   hasUserProfile: boolean;
   setHasUserProfile: (value: boolean) => void;
-  role: number | null;
+  role: Role | null;
   accountId: number | null;
   login: () => Promise<void>;
   logout: () => void;
   user: User | null;
+  hasAddress: boolean;
+  setHasAddress: (value: boolean) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -38,8 +44,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [authStatus, setAuthStatus] = useState<'checking' | 'authenticated' | 'not-authenticated'>('checking');
   const [hasUserProfile, setHasUserProfile] = useState<boolean>(false);
   const [accountId, setAccountId] = useState<number | null>(null);
-  const [role, setRole] = useState<number | null>(null);
+  const [role, setRole] = useState<Role | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [hasAddress, setHasAddress] = useState<boolean>(false);
 
   const checkUserProfile = async () => {
     try {
@@ -53,6 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       if (!userRes.ok) {
         setUser(null);
         setHasUserProfile(false);
+        setHasAddress(false);
         return;
       }
 
@@ -63,12 +71,20 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         setHasUserProfile(!!parsed.idUser);
         if (parsed.idUser) {
           setUser(parsed);
-          setRole(parsed.account?.role?.roleId || null);
+          setRole(parsed.account?.role || null);
           setHasUserProfile(true);
+
+          if(parsed.address?.addressId){
+            setHasAddress(true);
+          } else{
+            setHasAddress(false);
+          }
+
         } else {
           setUser(null);
           setHasUserProfile(false);
         }
+
       } catch (err) {
         setUser(null);
         setHasUserProfile(false);
@@ -89,7 +105,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       .then(async (res) => {
         if (res.ok) {
           const data = await res.json();
-          setRole(data.account?.role?.roleId || null);
+          setRole(data.account?.role || null);
           setAccountId(data.accountId);
           setAuthStatus('authenticated');
           await checkUserProfile();
@@ -97,12 +113,14 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
           setAuthStatus('not-authenticated');
           setRole(null);
           setHasUserProfile(false);
+          setHasAddress(false);
         }
       })
       .catch(() => {
         setAuthStatus('not-authenticated');
         setRole(null);
         setHasUserProfile(false);
+        setHasAddress(false);
       });
   }, []);
 
@@ -131,6 +149,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     setAuthStatus('not-authenticated');
     setRole(null);
     setHasUserProfile(false);
+    setHasAddress(false);
     setAccountId(null);
   };
 
@@ -144,7 +163,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         accountId,
         login,
         logout,
-        user
+        user,
+        hasAddress,
+        setHasAddress
       }}
     >
       {children}

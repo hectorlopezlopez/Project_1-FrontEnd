@@ -5,6 +5,7 @@ import { JSX, useContext } from 'react';
 import Register from '../components/Register';
 // import Home from '../pages/Home';
 import CompleteProfile from '../components/CompleteProfile';
+import CompleteAddress from '../components/CompleteAddress';
 import { AuthContext } from '../context/AuthContext';
 import { Navigate, Route, Routes } from 'react-router';
 import Home from '../pages/Home';
@@ -27,6 +28,8 @@ export const AppRouter = (): JSX.Element => {
           <>
             <Route path="/home" element={<Home />} />
             <Route path='/loan' element={<CreateLoan/>} />
+            <Route path="/create-address" element={<CompleteAddress />} />
+          
             <Route path="/*" element={<Navigate to="/home" />} />
           </>
         ) : (
