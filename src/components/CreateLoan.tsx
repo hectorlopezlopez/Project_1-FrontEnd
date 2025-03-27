@@ -64,7 +64,7 @@ function CreateLoan() {
 
                 <input
                     type="text"
-                    placeholder="Last Update (YYYY-MM-DD)"
+                    placeholder="Created: (YYYY-MM-DD)"
                     value={lastUpdate}
                     onChange={(e) => setLastUpdate(e.target.value)}
                 /><br/>
