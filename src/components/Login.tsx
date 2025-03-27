@@ -3,6 +3,8 @@ import { useContext, useState, FormEvent, JSX } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { loginRequest } from '../services/authservice';
+import './Login.css';
+
 import Swal from 'sweetalert2';
 function Login(): JSX.Element {
   const { login } = useContext(AuthContext);
@@ -42,7 +44,17 @@ function Login(): JSX.Element {
           navigate("/home");
         }, 200); 
       } else {
-        setError(data["error: "] || "Credenciales inválidas");
+        Swal.fire({
+                  toast:true,
+                  title: 'ERROR!',
+                  text: 'Invalid credentials.',
+                  icon: 'error',
+                  showConfirmButton: false,
+                  confirmButtonText: 'Accept',
+                  timer: 1000,
+                       timerProgressBar: true,
+                });
+        setError(data["error: "] || "Invalid credentials");
       }
     } catch (err) {
       console.error('Error al iniciar sesión:', err);
@@ -51,26 +63,68 @@ function Login(): JSX.Element {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>Login</h2>
-      <input 
-        type="text" 
-        placeholder="Username" 
-        value={username} 
-        onChange={e => setUsername(e.target.value)} 
+    <>
+    <div className="background">
+      <div className="shape"></div>
+      <div className="shape"></div>
+    </div>
+    <form className="login-form" onSubmit={handleLogin}>
+      <h3>Login Here</h3>
+
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        placeholder="Email or Phone"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
-      <input 
-        type="password" 
-        placeholder="Password" 
-        value={password} 
-        onChange={e => setPassword(e.target.value)} 
+
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Log in</button>
-      <button type="button" onClick={() => navigate("/register")}>
+
+      <button type="submit">Log In</button>
+
+      <button
+        type="button"
+        onClick={() => navigate("/register")}
+        style={{ marginTop: '10px' }}
+      >
         Register
       </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
     </form>
+  </>
+    // <form  onSubmit={handleLogin}>
+    //   <h2>Login</h2>
+    //   <input 
+    //     type="text" 
+    //     placeholder="Username" 
+    //     value={username} 
+    //     onChange={e => setUsername(e.target.value)} 
+    //   />
+    //   <input 
+    //     type="password" 
+    //     placeholder="Password" 
+    //     value={password} 
+    //     onChange={e => setPassword(e.target.value)} 
+    //   />
+    //   <button type="submit">Log in</button>
+    //   <button type="button" onClick={() => navigate("/register")}>
+    //     Register
+    //   </button>
+    //   {error && <p style={{ color: 'red' }}>{error}</p>}
+
+
+      
+    // </form>
   );
 }
 
