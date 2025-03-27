@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { createUserProfile } from '../services/user';
 import Swal from 'sweetalert2';
+import './CompleteProfile.css';
 
 function CompleteProfile(): JSX.Element {
   const { login, accountId, hasUserProfile } = useContext(AuthContext);
@@ -69,19 +70,68 @@ function CompleteProfile(): JSX.Element {
   const handleChange = (setter: React.Dispatch<React.SetStateAction<string>>) => 
     (e: ChangeEvent<HTMLInputElement>) => setter(e.target.value);
 
-  return (
-    <div>
-      <h2>Complete your profile</h2>
-      <form onSubmit={handleCreateUser}>
-        <input placeholder="Name" value={firstName} onChange={handleChange(setFirstName)} required />
-        <input placeholder="Last name" value={lastName} onChange={handleChange(setLastName)} required />
-        <input placeholder="Mail" value={email} onChange={handleChange(setEmail)} required />
-        <input placeholder="Date of creation" value={createdAt} onChange={handleChange(setCreatedAt)} required />
-        <input placeholder="Phone" value={phone} onChange={handleChange(setPhone)} required />
+  return  (
+    <>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
+      <form className="complete-form" onSubmit={handleCreateUser}>
+        <h3>Complete your profile</h3>
+
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          placeholder="Name"
+          value={firstName}
+          onChange={handleChange(setFirstName)}
+          required
+        />
+
+        <label htmlFor="lastname">Last name</label>
+        <input
+          id="lastname"
+          placeholder="Last name"
+          value={lastName}
+          onChange={handleChange(setLastName)}
+          required
+        />
+
+        <label htmlFor="email">Mail</label>
+        <input
+          id="email"
+          placeholder="Mail"
+          value={email}
+          onChange={handleChange(setEmail)}
+          required
+        />
+
+        <label htmlFor="createdAt">Date of creation</label>
+        <input
+          type="date"
+          id="createdAt"
+          name="trip-start"
+          value={createdAt}
+          min="2018-01-01"
+          max="2025-12-31"
+          onChange={handleChange(setCreatedAt)}
+          required
+        />
+
+        <label htmlFor="phone">Phone</label>
+        <input
+          id="phone"
+          placeholder="Phone"
+          value={phone}
+          onChange={handleChange(setPhone)}
+          required
+        />
+
         <button type="submit">Save profile</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+        {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
       </form>
-    </div>
+    </>
   );
 }
 

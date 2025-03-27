@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { loginRequest, registerRequest } from '../services/authservice';
 import Swal from 'sweetalert2';
+import './Login.css';
 
 interface Role {
   roleId: number;
@@ -117,30 +118,40 @@ function Register(): JSX.Element {
   }, [authStatus, pendingRedirect, navigate]);
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Name of user"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        /><br />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        /><br />
-        <button type="submit">Register</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+    <>
+    <div className="background">
+      <div className="shape"></div>
+      <div className="shape"></div>
     </div>
+    <form className="login-form" onSubmit={handleRegister}>
+      <h3>Register</h3>
+
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        placeholder="Name of user"
+        value={formData.username}
+        onChange={handleChange}
+        required
+      />
+
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={formData.password}
+        onChange={handleChange}
+        required
+      />
+
+      <button type="submit">Register</button>
+
+      {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
+      {success && <p style={{ color: 'green', marginTop: '15px' }}>{success}</p>}
+    </form>
+  </>
   );
 }
 

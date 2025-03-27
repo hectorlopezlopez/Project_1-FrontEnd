@@ -26,6 +26,7 @@ export const getMyUserInfo = async () => {
 };
 
 export const updateUser = async (userData: User): Promise<Response> => {
+  console.log({userData})
   return await fetch("http://localhost:8080/users/myuser", {
     method: "PUT",
     headers: {

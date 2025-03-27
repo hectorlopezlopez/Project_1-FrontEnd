@@ -5,6 +5,7 @@ import { User } from "../models/User";
 import { updateUser } from "../services/user";
 import { useNavigate } from "react-router";
 import Swal from 'sweetalert2';
+import './CompleteProfile.css'; 
 
 function UpdateMyProfile(): JSX.Element {
     const navigate = useNavigate();
@@ -30,7 +31,10 @@ function UpdateMyProfile(): JSX.Element {
     e.preventDefault();
     if (!formData) return;
 
-    const res = await updateUser(formData);
+    const { idUser, ...formDataWithoutId } = formData;
+    console.log(formDataWithoutId);
+
+    const res = await updateUser(formDataWithoutId);
 
     try {
       const data = await res.json();
@@ -58,53 +62,77 @@ function UpdateMyProfile(): JSX.Element {
     }
   };
 
-  return (
-    <div>
-      <h2>Update my profile</h2>
-      {formData ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="Name"
-            required
-          />
-          <input
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Last name"
-            required
-          />
-          <input
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
-            required
-          />
-          <input
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone"
-            required
-          />
-          <input
-            name="createdAt"
-            value={formData.createdAt}
-            onChange={handleChange}
-            placeholder="Date of creation"
-            required
-          />
-          <button type="submit">Save changes</button>
-        </form>
-      ) : (
-        <p>Loading data...</p>
-      )}
-      {message && <p>{message}</p>}
-    </div>
+  return  (
+    <>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
+
+      <form className="complete-form" onSubmit={handleSubmit}>
+        <h3>Update your profile</h3>
+
+        {formData ? (
+          <>
+            <label htmlFor="firstName">Name</label>
+            <input
+              name="firstName"
+              id="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              placeholder="Name"
+              required
+            />
+
+            <label htmlFor="lastName">Last name</label>
+            <input
+              name="lastName"
+              id="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Last name"
+              required
+            />
+
+            <label htmlFor="email">Email</label>
+            <input
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            />
+
+            <label htmlFor="phone">Phone</label>
+            <input
+              name="phone"
+              id="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Phone"
+              required
+            />
+
+            <label htmlFor="createdAt">Date of creation</label>
+            <input
+              name="createdAt"
+              id="createdAt"
+              type="date"
+              value={formData.createdAt}
+              onChange={handleChange}
+              required
+            />
+
+            <button type="submit">Save changes</button>
+          </>
+        ) : (
+          <p>Loading data...</p>
+        )}
+
+        {message && <p style={{ marginTop: '15px', color: '#333' }}>{message}</p>}
+      </form>
+    </>
   );
 }
 
