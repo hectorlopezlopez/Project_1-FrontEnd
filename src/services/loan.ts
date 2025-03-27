@@ -1,4 +1,6 @@
 import { Loan } from "../models/Loan";
+import { LoanStatus } from "../models/LoanStatus";
+import { LoanType } from "../models/LoanType";
 
 const API_BASE_URL = 'http://localhost:8080';
 
@@ -28,16 +30,30 @@ export const getAllLoans = async () => {
         console.error("Error fetching users:", error);
         return null;
     });
+};
+
+export const updateUserLoan = async (loanData: Loan): Promise<Response> =>{
+return await fetch(`${API_BASE_URL}/loan/userLoan`,{
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  credentials: "include",
+  body: JSON.stringify(loanData)
+})
 }
 
-export const updateLoan = async (loanId: number, loanData : Loan): Promise<Response> =>{
-  return await fetch("http://localhost:8080/loan/${loanId}",{
-    method :"PUT",
-    headers: {
-      "Content-type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(loanData),
+export const updateLoan = async (id: number, data:{
+  managerUpdate?: string;
+  loanStatus?: LoanStatus;
+  loanType?: LoanType;
+  statusReason?: string;
+}) =>{
+  return await fetch(`${API_BASE_URL}/loan/${id}`,{
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include',
+    body: JSON.stringify(data),
   });
 };
 

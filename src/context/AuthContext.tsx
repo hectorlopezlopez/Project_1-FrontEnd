@@ -3,6 +3,9 @@ import { createContext, useEffect, useState, ReactNode, JSX } from 'react';
 import { getMyUserInfo } from '../services/user';
 import { sessionInfo } from '../services/authservice';
 import { Address } from '../models/Address';
+import { Loan } from '../models/Loan';
+import { LoanStatus } from '../models/LoanStatus';
+import { LoanType } from '../models/LoanType';
 
 interface Role {
   roleId: number;
@@ -14,10 +17,17 @@ interface Account {
 }
 
 interface User {
-  idUser?: number;
+  idUser: number;
   account?: Account;
   firstName?: string;
   address?: Address;
+}
+
+interface Loan{
+  statusReason?: string;
+  loanStatus: LoanStatus;
+  loanType?: LoanType;
+  managerUpdate?: string;
 }
 
 interface AuthContextType {
@@ -33,6 +43,10 @@ interface AuthContextType {
   setAddress: (value: Address) => void;
   hasAddress: boolean;
   setHasAddress: (value: boolean) => void;
+  loan: Loan |null;
+  setLoan: (value: Loan) => void;
+  hasLoan: boolean;
+  setHasLoan: (value: boolean) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -48,6 +62,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [role, setRole] = useState<Role | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [address, setAddress] = useState<Address | null> (null);
+  const [loan, setLoan] = useState<Loan |null> (null);
+  const [hasLoan, setHasLoan] = useState<boolean>(false);
   const [hasAddress, setHasAddress] = useState<boolean>(false);
 
 
@@ -173,7 +189,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         address,
         setAddress,
         hasAddress,
-        setHasAddress
+        setHasAddress,
+        loan,
+        setLoan,
+        hasLoan,
+        setHasLoan
       }}
     >
       {children}
