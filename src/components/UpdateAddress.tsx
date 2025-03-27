@@ -5,6 +5,8 @@ import { useNavigate } from "react-router";
 import { updateMyAddress } from "../services/addressService";
 import { Address } from "../models/Address";
 import Swal from 'sweetalert2';
+import './CompleteProfile.css';
+
 
 function UpdateAddress(): JSX.Element {
     const navigate = useNavigate();
@@ -58,60 +60,96 @@ function UpdateAddress(): JSX.Element {
     };
     
     return (
-        <div>
-      <h2>Update my Address</h2>
-      {formData ? (
-        <form onSubmit={handleSubmit}>
+      <>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
+    
+      <form className="complete-form" onSubmit={handleSubmit}>
+        <h3>Update my Address</h3>
+    
+        {formData ? (
+          <>
+            <label htmlFor="country">Country</label>
             <input
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                placeholder="Country"
-                required
+              id="country"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              placeholder="Country"
+              required
             />
+    
+            <label htmlFor="state">State</label>
             <input
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                placeholder="State"
-                required
+              id="state"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              placeholder="State"
+              required
             />
+    
+            <label htmlFor="city">City</label>
             <input
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                placeholder="City"
-                required
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              placeholder="City"
+              required
             />
+    
+            <label htmlFor="street">Street</label>
             <input
-                name="street"
-                value={formData.street}
-                onChange={handleChange}
-                placeholder="Street"
-                required
+              id="street"
+              name="street"
+              value={formData.street}
+              onChange={handleChange}
+              placeholder="Street"
+              required
             />
+    
+            <label htmlFor="streetNum">Street Number</label>
             <input
-                name="streetNum"
-                value={formData.streetNum}
-                onChange={handleChange}
-                placeholder="Street Number"
-                required
+              id="streetNum"
+              name="streetNum"
+              value={formData.streetNum}
+              onChange={handleChange}
+              placeholder="Street Number"
+              required
             />
+    
+            <label htmlFor="zip">ZIP</label>
             <input
-                name="zip"
-                value={formData.zip}
-                onChange={handleChange}
-                placeholder="Zip"
-                required
+              id="zip"
+              name="zip"
+              value={formData.zip}
+              onChange={handleChange}
+              placeholder="ZIP Code"
+              required
             />
+    
             <button type="submit">Save changes</button>
-            <button type="button" onClick={(e) => { e.preventDefault(); navigate("/home"); }}>Cancel</button>
-        </form>
-      ) : (
-        <p>Loading data...</p>
-      )}
-      {message && <p>{message}</p>}
-    </div>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/home");
+              }}
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <p>Loading data...</p>
+        )}
+    
+        {message && <p style={{ marginTop: '15px', color: '#333' }}>{message}</p>}
+      </form>
+    </>
+    
     );
 
 }
