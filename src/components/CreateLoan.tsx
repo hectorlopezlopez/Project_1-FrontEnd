@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 function CreateLoan() {
     const [amountRequested, setAmountRequested] = useState('');
     const [lastUpdate, setLastUpdate] = useState('');
-    const [loanTypeId, setLoanTypeId] = useState<number | undefined>();
-    const [loanStatusId, setLoanStatusId] = useState<number | undefined>(); 
+    const [loanTypeId, setLoanTypeId] = useState<number>();
+    const [loanStatusId, setLoanStatusId] = useState<number>(); 
     const navigate = useNavigate();
 
     const handleCreateLoan = async (e: FormEvent<HTMLFormElement>) => {
