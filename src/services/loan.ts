@@ -29,3 +29,15 @@ export const getAllLoans = async () => {
         return null;
     });
 }
+
+export const updateLoan = async (loanId: number, loanData : Loan): Promise<Response> =>{
+  return await fetch("http://localhost:8080/loan/${loanId}",{
+    method :"PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(loanData),
+  });
+};
+

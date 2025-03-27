@@ -5,25 +5,20 @@ function CreateLoan() {
     const [amountRequested, setAmountRequested] = useState('');
     const [lastUpdate, setLastUpdate] = useState('');
     const [loanTypeId, setLoanTypeId] = useState<number | undefined>();
-    const [userId, setUserId] = useState<number | undefined>();
-    const [loanStatusId, setLoanStatusId] = useState<number | undefined>(); // Add loanStatusId state
+    const [loanStatusId, setLoanStatusId] = useState<number | undefined>(); 
     const navigate = useNavigate();
 
     const handleCreateLoan = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Construct the payload to match the backend's expected structure
         const payload = {
-            amountRequested: parseInt(amountRequested, 10), // Convert to number
-            lastUpdate, // Include lastUpdate if your backend expects it
-            user: {
-                idUser: userId, // Match the field name expected by the backend
-            },
+            amountRequested: parseInt(amountRequested, 10), 
+            lastUpdate, 
             loanStatus: {
-                id: loanStatusId, // Add loanStatus
+                id: loanStatusId, 
             },
             loanType: {
-                id: loanTypeId, // Match the field name expected by the backend
+                id: loanTypeId, 
             },
         };
 
@@ -74,13 +69,6 @@ function CreateLoan() {
                     placeholder="Loan Type ID"
                     value={loanTypeId ?? ''} // Handle undefined state
                     onChange={(e) => setLoanTypeId(parseInt(e.target.value, 10))}
-                /><br/>
-
-                <input
-                    type="number"
-                    placeholder="User ID"
-                    value={userId ?? ''} // Handle undefined state
-                    onChange={(e) => setUserId(parseInt(e.target.value, 10))}
                 /><br/>
 
                 <input
