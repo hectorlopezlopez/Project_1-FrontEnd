@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {getAllLoans} from "../services/loan";
 import { Loan } from "../models/Loan";
-
+import "./AllLoans.css";
 const getAllLoansComp: React.FC = () =>{
     const [loans, setLoans] = useState<Loan[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -21,27 +21,35 @@ const getAllLoansComp: React.FC = () =>{
         }, []);
 
         return(
-            <div>
-      <h2>List of Loans</h2>
-      {error ? (
-        <p style={{ color: "red" }}>{error}</p>
-      ) : (
-        <ul>
-          {loans.map((loan) => (
-            <li key={loan.loanId}>
-              ID: {loan.loanId} 
-              - Monto: {loan.amountRequested} 
-              - Manager Update: {loan.managerUpdate} 
-              {/* - User: {loan.user}
-              - Estado: {loan.loanStatus}
-              - Type: {loan.loanType} */}
-              - Last update: {loan.lastUpdate}
-              - Status: {loan.statusReason}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+          <div className="loan-list-container">
+          <h2>Lista de Préstamos</h2>
+        
+          {error ? (
+            <p className="error">{error}</p>
+          ) : (
+            <>
+              <div className="loan-list-header">
+                <span>ID</span>
+                <span>Monto</span>
+                <span>Manager</span>
+                <span>Actualización</span>
+                <span>Estado</span>
+              </div>
+              <ul className="loan-list">
+                {loans.map((loan) => (
+                  <li key={loan.loanId} className="loan-list-item">
+                    <span>{loan.loanId}</span>
+                    <span>{loan.amountRequested}</span>
+                    <span>{loan.managerUpdate}</span>
+                    <span>{loan.lastUpdate}</span>
+                    <span>{loan.statusReason}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+        
   );
         
     
