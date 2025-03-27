@@ -8,6 +8,7 @@ import { logoutRequest } from '../services/authservice';
 function Home(): JSX.Element {
   const { user, role, address, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [userId, setUserId] = useState<number | string>('');  // State to hold the userId input
 
   const handleLogout = async (): Promise<void> => {
     // await fetch("http://localhost:8080/auth/accounts/logout", {
@@ -26,6 +27,17 @@ function Home(): JSX.Element {
   const handleAddress = async (): Promise<void> => {
     navigate("/create-address");
   }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserId(event.target.value);
+  };
+
+  const handleSearch = () => {
+    if (userId) {
+      // Redirect to the GetUserById page with the userId
+      navigate(`/user/${userId}`);
+    }
+  };
 
   console.log("USER desde Home:", user);
   console.log("ROLE desde Home:", role?.roleId);
@@ -46,6 +58,7 @@ function Home(): JSX.Element {
           <button type="button" onClick={() => navigate("/users")}>All Users</button>
           <button type="button" onClick={() => navigate("/loans")}>All Loans</button>
 
+
         </div>
       )}
 
@@ -60,6 +73,14 @@ function Home(): JSX.Element {
       <button type="button" onClick={() => navigate("/myprofile")}>Updatemyprof</button>
       <button type="button" onClick={() => navigate("/loan")}>Loan</button>
       <button type="button" onClick={() => navigate("/myAddress")}>myAddress</button>
+
+      <input
+            type="number"
+            value={userId}
+            onChange={handleInputChange}
+            placeholder="Enter User ID"
+        />
+        <button onClick={handleSearch}>SearchUserById</button>
     </div>
   );
 }

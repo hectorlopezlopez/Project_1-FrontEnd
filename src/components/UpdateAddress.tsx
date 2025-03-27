@@ -7,7 +7,6 @@ import { Address } from "../models/Address";
 import Swal from 'sweetalert2';
 import './CompleteProfile.css';
 
-
 function UpdateAddress(): JSX.Element {
     const navigate = useNavigate();
     const { address, setAddress } = useContext(AuthContext);
