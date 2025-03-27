@@ -1,15 +1,13 @@
-import { useState, useContext, useEffect, ChangeEvent, FormEvent, JSX } from 'react';
+import { useState, useContext, useEffect, ChangeEvent, JSX } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
-import { createAddress, getAllAddress } from '../services/addressService';
-import { Address } from '../models/Address';
+import { createAddress} from '../services/addressService';
 
-function CompleteAddress(){
+function CompleteAddress(): JSX.Element{
     const { hasAddress } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [address, setAddress] = useState<Address[]>([]);
     const [country, setCountry] = useState<string>('');
     const [state, setState] = useState<string>('');
     const [city, setCity] = useState<string>('');
@@ -17,22 +15,6 @@ function CompleteAddress(){
     const [streetNum, setStreetNum] = useState<string>('');
     const [zip, setZip] = useState<string>('');
     const [addressCreated, setAddressCreated] = useState<boolean>(false);
-
-    const auth = useContext(AuthContext);
-
-    const fetchAddress = async () => {
-        try {
-            const res = await getAllAddress();
-            const data = await res.json();
-            if(Array.isArray(data)){
-                setAddress(data);
-            } else {
-                setAddress([data.address]);
-            }
-        } catch(err){
-            console.error(err);
-        }
-    };
 
     const handleCreateAddress = async () => {
         const address = {
@@ -79,16 +61,17 @@ function CompleteAddress(){
                 <input
                     value={street}
                     onChange={handleChange(setStreet)} required
-                    placeholder="State" />
+                    placeholder="Street" />
                 <input
                     value={streetNum}
                     onChange={handleChange(setStreetNum)} required
-                    placeholder="State" />
+                    placeholder="Street Number" />
                 <input
                     value={zip}
                     onChange={handleChange(setZip)} required
                     placeholder="Zip" />
                 <button type="submit">Save profile</button>
+                <button onClick={() => navigate("/home")}>Back</button>
             </form>
             
         </>
