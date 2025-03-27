@@ -61,16 +61,17 @@ function CompleteAddress(): JSX.Element{
                 <input
                     value={street}
                     onChange={handleChange(setStreet)} required
-                    placeholder="State" />
+                    placeholder="Street" />
                 <input
                     value={streetNum}
                     onChange={handleChange(setStreetNum)} required
-                    placeholder="State" />
+                    placeholder="Street Number" />
                 <input
                     value={zip}
                     onChange={handleChange(setZip)} required
                     placeholder="Zip" />
                 <button type="submit">Save profile</button>
+                <button onClick={() => navigate("/home")}>Back</button>
             </form>
             
         </>
