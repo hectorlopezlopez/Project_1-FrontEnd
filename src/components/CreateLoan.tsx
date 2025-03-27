@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router";
+import './Loans.css';
 
 function CreateLoan() {
     const [amountRequested, setAmountRequested] = useState('');
@@ -47,40 +48,57 @@ function CreateLoan() {
     };
 
     return (
-        <div>
-            <h2>Create Loan</h2>
-            <form onSubmit={handleCreateLoan}>
-                <input
-                    type="number"
-                    placeholder="Amount Requested"
-                    value={amountRequested}
-                    onChange={(e) => setAmountRequested(e.target.value)}
-                /><br/>
-
-                <input
-                    type="text"
-                    placeholder="Created: (YYYY-MM-DD)"
-                    value={lastUpdate}
-                    onChange={(e) => setLastUpdate(e.target.value)}
-                /><br/>
-
-                <input
-                    type="number"
-                    placeholder="Loan Type ID"
-                    value={loanTypeId ?? ''} // Handle undefined state
-                    onChange={(e) => setLoanTypeId(parseInt(e.target.value, 10))}
-                /><br/>
-
-                <input
-                    type="number"
-                    placeholder="Loan Status ID"
-                    value={loanStatusId ?? ''} // Handle undefined state
-                    onChange={(e) => setLoanStatusId(parseInt(e.target.value, 10))}
-                /><br/>
-
-                <button type="submit">Create Loan</button>
-            </form>
-        </div>
+      <div className="background">
+      <div className="shape"></div>
+      <div className="shape"></div>
+    
+      <form className="loan-form" onSubmit={handleCreateLoan}>
+        <h3>Create Loan</h3>
+    
+        <label htmlFor="amountRequested">Amount Requested</label>
+        <input
+          id="amountRequested"
+          type="number"
+          placeholder="Amount Requested"
+          value={amountRequested}
+          onChange={(e) => setAmountRequested(e.target.value)}
+          required
+        />
+    
+        <label htmlFor="lastUpdate">Created (YYYY-MM-DD)</label>
+        <input
+          id="lastUpdate"
+          type="text"
+          placeholder="Created: (YYYY-MM-DD)"
+          value={lastUpdate}
+          onChange={(e) => setLastUpdate(e.target.value)}
+          required
+        />
+    
+        <label htmlFor="loanTypeId">Loan Type ID</label>
+        <input
+          id="loanTypeId"
+          type="number"
+          placeholder="Loan Type ID"
+          value={loanTypeId ?? ''}
+          onChange={(e) => setLoanTypeId(parseInt(e.target.value, 10))}
+          required
+        />
+    
+        <label htmlFor="loanStatusId">Loan Status ID</label>
+        <input
+          id="loanStatusId"
+          type="number"
+          placeholder="Loan Status ID"
+          value={loanStatusId ?? ''}
+          onChange={(e) => setLoanStatusId(parseInt(e.target.value, 10))}
+          required
+        />
+    
+        <button type="submit">Create Loan</button>
+      </form>
+    </div>
+    
     );
 }
 
