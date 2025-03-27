@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { logoutRequest } from '../services/authservice';
 
 function Home(): JSX.Element {
-  const { user, role, logout } = useContext(AuthContext);
+  const { user, role, address, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async (): Promise<void> => {
@@ -25,6 +25,7 @@ function Home(): JSX.Element {
 
   console.log("USER desde Home:", user);
   console.log("ROLE desde Home:", role?.roleId);
+  console.log("ADDRESS desde Home: ", address);
 
   if (!user || !role) {
     return <p style={{ textAlign: 'center' }}>loading user...</p>;
@@ -49,12 +50,9 @@ function Home(): JSX.Element {
       )}
 
       <button onClick={handleLogout}>Log out</button>
-      <button type="button" onClick={() => navigate("/myprofile")}>
-        Updatemyprof
-      </button>
-      <button type="button" onClick={() => navigate("/loan")}>
-        Loan
-      </button>
+      <button type="button" onClick={() => navigate("/myprofile")}>Updatemyprof</button>
+      <button type="button" onClick={() => navigate("/loan")}>Loan</button>
+      <button type="button" onClick={() => navigate("/myAddress")}>myAddress</button>
     </div>
   );
 }
