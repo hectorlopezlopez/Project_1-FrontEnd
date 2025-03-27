@@ -18,6 +18,14 @@ export const createAddress = async (data:{
     });
 };
 
+export const getMyAddress = async () => {
+    return await fetch (`${API_BASE_URL}/address/myAddress`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json'},
+        credentials: 'include',
+    });
+};
+
 export const getAllAddress = async () => {
     return await fetch (`${API_BASE_URL}/address`, {
         method: 'GET',
@@ -32,6 +40,17 @@ export const getAddressById = async (id: number) => {
         headers: { 'Content-Type': 'application/json'},
         credentials: 'include',
     });
+};
+
+export const updateMyAddress = async (addressData: Address): Promise<Response> => {
+  return await fetch(`${API_BASE_URL}/address/myAddress`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(addressData),
+  });
 };
 
 export const updateAddress = async (id: number, data: {
