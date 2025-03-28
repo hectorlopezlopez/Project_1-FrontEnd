@@ -1,14 +1,19 @@
 // src/pages/Home.tsx
-import { JSX, useContext, useState } from 'react';
+import { JSX, useContext, useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { logoutRequest } from '../services/authservice';
+import { getLoansByUser } from '../services/loan';
 
 function Home(): JSX.Element {
   const { user, role, address, logout } = useContext(AuthContext);
   const [userId, setUserId] = useState('');
   const [loanId, setLoanId] = useState('');
+  const [loanId2, setLoanId2] = useState('');
+  const [userLoans, setUserLoans] = useState([]);
+  const [loansError, setLoansError] = useState('');
+
   const navigate = useNavigate();
 
   const handleLogout = async (): Promise<void> => {
@@ -59,11 +64,20 @@ function Home(): JSX.Element {
   const handleUserIdInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(event.target.value);
   };
+  const handleLoanIdInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanId2(event.target.value);
+  };
 
   const handleSearch = () => {
     if (userId) {
       // Redirect to the GetUserById page with the userId
       navigate(`/user/${userId}`);
+    }
+  };
+  const handleSearchLoan = () => {
+    if (loanId2) {
+      // Redirect to the GetUserById page with the userId
+      navigate(`/loan/${loanId2}`);
     }
   };
 
@@ -76,6 +90,24 @@ function Home(): JSX.Element {
     return <p style={{ textAlign: 'center' }}>loading user...</p>;
   }
 */
+useEffect(() => {
+  const fetchUserLoans = async () => {
+    try {
+      const res = await getLoansByUser();
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        setLoansError(data.error || "Error fetching your loans.");
+      } else {
+        setUserLoans(data);
+      }
+    } catch (err) {
+      setLoansError("Server error while fetching loans.");
+    }
+  };
+
+  fetchUserLoans();
+}, []);
 
   return (
     <div>
@@ -200,12 +232,34 @@ function Home(): JSX.Element {
                style = {{position: "absolute", bottom: "140px", right: "220px"}}>
             <input style = {{textAlign: "center"}}
                    type = "number" placeholder = "User ID" value = {userId} onChange={handleUserIdInputChange}/>
+
+            {/* <input style = {{textAlign: "center"}}
+                   type = "number" placeholder = "Loan ID" value = {setLoanId2} onChange={handleLoanIdInputChange}/> */}
+                   <input
+  style={{ textAlign: "center" }}
+  type="number"
+  placeholder="Loan ID"
+  value={loanId2}
+  onChange={(e) => setLoanId2(e.target.value)}
+/>
           </div>
-          <button type = "button" className = "btn btn-info"
+          {/* <button type = "button" className = "btn btn-info"
             onClick = {handleViewLoanById}
             style = {{position: "absolute", bottom: "80px", right: "0px",
             margin: "30px", padding: "10px 30px"}}><b>View loan</b>
+          </button> */}
+          <button
+            type="button"
+            className="btn btn-info"
+            onClick={() => {
+              if (loanId2) navigate(`/loanbyid/${loanId2}`);
+            }}
+            style={{ position: "absolute", bottom: "80px", right: "0px",
+              margin: "30px", padding: "10px 30px"}}
+          >
+            <b>View loan</b>
           </button>
+          
           <div className = "form-floating mb-3"
                style = {{position: "absolute", bottom: "60px", right: "220px"}}>
                 {/* ---------------------------------------------------------------------------------- */}
@@ -252,7 +306,43 @@ function Home(): JSX.Element {
                position: "absolute", top: "30%", right: "5%", fontSize: "20px",
                color: "rgba(0, 0, 0, 1)"}}>
             <div className = "card-body">
-              <p className = "fs-6">No loan applications has been fulfilled</p>
+              {/* <p className = "fs-6">No loan applications has been fulfilled</p> */}
+              {loansError ? (
+                <p style={{ color: 'red' }}>{loansError}</p>
+                  ) : userLoans.length === 0 ? (
+                    <p className="fs-6">No loan applications have been fulfilled</p>
+                  ) : (
+                    <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+                      {userLoans.map((loan: any) => (
+                        <li key={loan.id}>
+                          <strong>Amount:</strong> {loan.amountRequested} — 
+                          {/* <strong> Status:</strong> {loan.loanStatus?.loanStatus || 'N/A'} —  */}
+                          <strong>Status:</strong>{' '}
+                          {loan.loanStatus
+                            ? loan.loanStatus.id === 1
+                              ? 'Approved'
+                              : 'Rejected'
+                            : 'N/A'} — 
+                          {/* <strong> Type:</strong> {loan.loanType?.loanType || 'N/A'} */}
+                          <strong>Type:</strong>{' '}
+                          {loan.loanType
+                            ? loan.loanType === 1
+                              ? 'Personal loan'
+                              : loan.loanType.id === 2
+                              ? 'Mortgage loan'
+                              : loan.loanType.id === 3
+                              ? 'Car loan'
+                              : loan.loanType.id === 4
+                              ? 'Student loan'
+                              : 'Unknown'
+                            : 'N/A'}
+
+                        </li>
+                        
+                      ))}
+                    </ul>
+                  )}
+
             </div>
           </div>
           <button type = "button" className = "btn btn-dark"

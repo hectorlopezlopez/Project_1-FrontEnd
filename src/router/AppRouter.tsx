@@ -17,6 +17,7 @@ import UpdateAddress from '../components/UpdateAddress';
 import GetLoans from '../components/GetLoans';
 import UpdateLoan from '../components/UpdateMyLoan';
 import GetUserById from '../components/GetUserById';
+import GetLoanById from '../components/GetLoanById';
 
 
 export const AppRouter = (): JSX.Element => {
@@ -41,6 +42,7 @@ export const AppRouter = (): JSX.Element => {
             {/* <Route path="/update-loan/:" element={<UpdateLoan/>} /> */}
             <Route path="/update-loan/:loanId" element={<UpdateLoan />} />
             <Route path="/user/:userId" element={<GetUserById />} />
+            <Route path="/loanbyid/:loanId2" element={<GetLoanById />} />
             <Route path="/*" element={<Navigate to="/home" />} />
             <Route path="/users" element={<ManagerUsers />} /> 
             <Route path='/loans' element={<GetLoans/>} />         

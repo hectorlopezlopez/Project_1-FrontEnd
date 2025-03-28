@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../services/manager";
 import "./User.css";
+import { useNavigate } from "react-router";
 const getAllUsersManager: React.FC = () => {
     const [users, setUsers] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -42,6 +44,9 @@ const getAllUsersManager: React.FC = () => {
       </ul>
     </>
   )}
+    <button className="return-btn" onClick={() => navigate("/home")}>
+        Return
+      </button>
 </div>
 
       

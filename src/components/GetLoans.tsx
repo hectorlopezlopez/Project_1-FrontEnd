@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import {getAllLoans} from "../services/loan";
 import { Loan } from "../models/Loan";
 import "./AllLoans.css";
+import { useNavigate } from "react-router";
 const getAllLoansComp: React.FC = () =>{
     const [loans, setLoans] = useState<Loan[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
             const fetchLoans = async () => {
@@ -48,7 +50,11 @@ const getAllLoansComp: React.FC = () =>{
               </ul>
             </>
           )}
+          <button className="return-btn" onClick={() => navigate("/home")}>
+        Return
+      </button>
         </div>
+
         
   );
         

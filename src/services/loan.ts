@@ -49,3 +49,13 @@ export const getLoanById = async (loanId: number): Promise<Response> => {
   });
 };
 
+
+export const getLoansByUser = async (): Promise<Response> => {
+  return await fetch("http://localhost:8080/loan/user", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include", 
+  });
+};
