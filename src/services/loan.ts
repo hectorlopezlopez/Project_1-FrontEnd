@@ -31,13 +31,21 @@ export const getAllLoans = async () => {
 }
 
 export const updateLoan = async (loanId: number, loanData : Loan): Promise<Response> =>{
-  return await fetch("http://localhost:8080/loan/${loanId}",{
+  return await fetch(`http://localhost:8080/loan/${loanId}`,{
     method :"PUT",
     headers: {
       "Content-type": "application/json",
     },
     credentials: "include",
     body: JSON.stringify(loanData),
+  });
+};
+
+
+export const getLoanById = async (loanId: number): Promise<Response> => {
+  return await fetch(`http://localhost:8080/loan/${loanId}`, {
+    method: "GET",
+    credentials: "include",
   });
 };
 

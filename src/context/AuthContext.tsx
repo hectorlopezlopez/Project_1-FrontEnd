@@ -3,22 +3,24 @@ import { createContext, useEffect, useState, ReactNode, JSX } from 'react';
 import { getMyUserInfo } from '../services/user';
 import { sessionInfo } from '../services/authservice';
 import { Address } from '../models/Address';
+import { User } from '../models/User';
+import { Role } from '../models/Role';
 
-interface Role {
-  roleId: number;
-  roleName: string;
-}
+// interface Role {
+//   roleId: number;
+//   roleName: string;
+// }
 
-interface Account {
-  role?: Role;
-}
+// interface Account {
+//   role?: Role;
+// }
 
-interface User {
-  idUser?: number;
-  account?: Account;
-  firstName?: string;
-  address?: Address;
-}
+// interface User {
+//   idUser?: number;
+//   account?: Account;
+//   firstName?: string;
+//   address?: Address;
+// }
 
 interface AuthContextType {
   authStatus: 'checking' | 'authenticated' | 'not-authenticated';

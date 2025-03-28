@@ -37,8 +37,8 @@ const getAllLoansComp: React.FC = () =>{
               </div>
               <ul className="loan-list">
                 {loans.map((loan) => (
-                  <li key={loan.loanId} className="loan-list-item">
-                    <span>{loan.loanId}</span>
+                  <li key={loan.id} className="loan-list-item">
+                    <span>{loan.id}</span>
                     <span>{loan.amountRequested}</span>
                     <span>{loan.managerUpdate}</span>
                     <span>{loan.lastUpdate}</span>

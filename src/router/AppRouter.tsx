@@ -15,6 +15,8 @@ import ManagerUsers from '../components/ManagerUsers';
 import UpdateMyProfile from '../components/UpdateMyProfile';
 import UpdateAddress from '../components/UpdateAddress';
 import GetLoans from '../components/GetLoans';
+import UpdateLoan from '../components/UpdateMyLoan';
+import GetUserById from '../components/GetUserById';
 
 
 export const AppRouter = (): JSX.Element => {
@@ -36,11 +38,13 @@ export const AppRouter = (): JSX.Element => {
             <Route path='/loan' element={<CreateLoan/>} />
             <Route path="/create-address" element={<CompleteAddress />} /> 
             <Route path="/myAddress" element={<UpdateAddress />} />
-            
-            
+            {/* <Route path="/update-loan/:" element={<UpdateLoan/>} /> */}
+            <Route path="/update-loan/:loanId" element={<UpdateLoan />} />
+            <Route path="/user/:userId" element={<GetUserById />} />
             <Route path="/*" element={<Navigate to="/home" />} />
             <Route path="/users" element={<ManagerUsers />} /> 
             <Route path='/loans' element={<GetLoans/>} />         
+            
             </>
         ) : (
           <>

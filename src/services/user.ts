@@ -25,6 +25,14 @@ export const getMyUserInfo = async () => {
   });
 };
 
+export const getUserById = async (id: number) => {
+  const response = await fetch(`http://localhost:8080/users/${id}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  return response;
+};
+
 export const updateUser = async (userData: User): Promise<Response> => {
   console.log({userData})
   return await fetch("http://localhost:8080/users/myuser", {

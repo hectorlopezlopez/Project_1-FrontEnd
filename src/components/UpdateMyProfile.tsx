@@ -39,6 +39,8 @@ function UpdateMyProfile(): JSX.Element {
     try {
       const data = await res.json();
       if (data?.idUser) {
+        console.log("Api:");
+        console.log(data);
          Swal.fire({
                   toast:true,
                   title: 'Success!',
